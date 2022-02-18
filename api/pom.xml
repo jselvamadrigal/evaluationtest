@@ -7,7 +7,6 @@
 		<groupId>com.jselva.nisum</groupId>
 		<artifactId>pom</artifactId>
 		<version>1.0.0</version>
-		<relativePath/>
 	</parent>
 
 	<artifactId>api</artifactId>
@@ -62,7 +61,7 @@
 		<dependency>
 			<groupId>com.jselva.nisum</groupId>
 			<artifactId>data</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
@@ -105,4 +104,8 @@
 		</plugins>
 	</build>
 
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
 </project>

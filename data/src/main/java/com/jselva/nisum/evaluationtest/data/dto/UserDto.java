@@ -3,6 +3,7 @@ package com.jselva.nisum.evaluationtest.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jselva.nisum.evaluationtest.data.annotation.ValidPassword;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -24,8 +25,8 @@ public class UserDto {
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "{email.invalid}")
     private String email;
 
-    @NotNull(message = "${value.not.null}")
-    @NotEmpty(message = "${value.not.empty}")
+    @ValidPassword
+    @NotEmpty(message = "Contraseña requerida")
     private String password;
 
     private String token;
