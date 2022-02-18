@@ -2,6 +2,7 @@ package com.jselva.nisum.evaluationtest.services;
 
 import com.jselva.nisum.evaluationtest.configuration.security.JwtProvider;
 import com.jselva.nisum.evaluationtest.data.repositories.UserRepository;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class UserDetailsSecurityServiceImpl implements UserDetailsSecurityServic
 
         if (jwtProvider.validateToken(token)) {
             return Optional.of(
-                    org.springframework.security.core.userdetails.User.withUsername(jwtProvider.getUsername(token))
+                    User.withUsername(jwtProvider.getUsername(token))
                             .authorities(jwtProvider.getRoles(token))
                             .password("")
                             .accountExpired(false)
@@ -37,7 +38,7 @@ public class UserDetailsSecurityServiceImpl implements UserDetailsSecurityServic
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = this.userRepository.findByEmail(username).orElseThrow(() ->
+        com.jselva.nisum.evaluationtest.data.entity.User user = this.userRepository.findByEmail(username).orElseThrow(() ->
                 new UsernameNotFoundException("Usuario o contraseña invalidas"));
 
         return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())

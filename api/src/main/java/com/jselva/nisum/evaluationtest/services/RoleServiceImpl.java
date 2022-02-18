@@ -29,7 +29,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public Optional<Role> save(RoleDto roleDto) {
-        var roleOptional = this.roleRepository.findByName(roleDto.getName());
+        Optional<Role> roleOptional = this.roleRepository.findByName(roleDto.getName());
 
         roleOptional.ifPresent(role -> {
             throw new ApiException("role.found", HttpStatus.FORBIDDEN);
@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAll() {
-        var roles = new ArrayList<Role>();
+        List<Role> roles = new ArrayList<>();
         this.roleRepository.findAll().forEach(roles::add);
         return roles;
     }
@@ -54,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public void remove(String roleName) {
-        var roleOptional = this.find(roleName);
+        Optional<Role> roleOptional = this.find(roleName);
         roleOptional.ifPresent(role -> this.roleRepository.delete(roleOptional.get()));
     }
 

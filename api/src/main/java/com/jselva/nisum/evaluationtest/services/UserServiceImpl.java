@@ -3,6 +3,7 @@ package com.jselva.nisum.evaluationtest.services;
 import com.jselva.nisum.evaluationtest.configuration.security.JwtProvider;
 import com.jselva.nisum.evaluationtest.data.converter.UserConverter;
 import com.jselva.nisum.evaluationtest.data.dto.UserDto;
+import com.jselva.nisum.evaluationtest.data.entity.Phone;
 import com.jselva.nisum.evaluationtest.data.entity.Role;
 import com.jselva.nisum.evaluationtest.data.entity.User;
 import com.jselva.nisum.evaluationtest.data.exceptions.ApiException;
@@ -51,14 +52,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> save(UserDto userDto) {
         Optional<User> userSaved = Optional.empty();
-        var userExists = this.userRepository.findByEmail(userDto.getEmail());
+        Optional<User> userExists = this.userRepository.findByEmail(userDto.getEmail());
 
         userExists.ifPresent(action -> {
             throw new ApiException("Ya existe un usuario registrado con ese email.", HttpStatus.FORBIDDEN);
         });
 
         if (!userDto.getPhones().isEmpty()) {
-            var phoneOptionals = userDto.getPhones().stream()
+            List<Optional<Phone>> phoneOptionals = userDto.getPhones().stream()
                     .map(phone -> this.phoneRepository.findByNumber(phone.getNumber()))
                     .collect(Collectors.toList());
 
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
             );
         }
 
-        var role = this.roleRepository.findByName(RoleType.ROLE_READ.name());
+        Optional<Role> role = this.roleRepository.findByName(RoleType.ROLE_READ.name());
         if (role.isPresent()) {
             userDto.setToken(this.jwtProvider.generateToken(userDto.getEmail(), Collections.singletonList(role.get())));
             userSaved = Optional.of(
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> find(String email) {
-        var user = this.userRepository.findByEmail(email).orElseThrow(() ->
+        User user = this.userRepository.findByEmail(email).orElseThrow(() ->
                 new ApiException("user.not.found", HttpStatus.NOT_FOUND));
 
         return Optional.of(user);
@@ -116,7 +117,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        var users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         this.userRepository.findAll().forEach(users::add);
         return users;
     }

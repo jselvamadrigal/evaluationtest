@@ -7,6 +7,7 @@ import com.jselva.nisum.evaluationtest.data.entity.Phone;
 import com.jselva.nisum.evaluationtest.data.entity.User;
 import com.jselva.nisum.evaluationtest.data.models.RoleType;
 import com.jselva.nisum.evaluationtest.data.util.Converter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.ZoneId;
@@ -21,9 +22,9 @@ public class UserConverter extends Converter<UserDto, User> {
     }
 
     private static UserDto convertToDto(User user) {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        var userDto = new UserDto();
+        UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
@@ -61,7 +62,7 @@ public class UserConverter extends Converter<UserDto, User> {
     }
 
     private static User convertToEntity(UserDto dto) {
-        final var user = new User();
+        final User user = new User();
 
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());

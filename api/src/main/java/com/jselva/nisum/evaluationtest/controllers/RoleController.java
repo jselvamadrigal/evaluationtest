@@ -45,8 +45,8 @@ public class RoleController {
     @SecurityRequirement(name = "JWT")
     @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseGenericApi<RoleDto>> find(@Valid @RequestParam("name") String name) {
-        var responseApi = new ResponseGenericApi<RoleDto>();
-        var roleOptional = this.roleService.find(name);
+        ResponseGenericApi<RoleDto> responseApi = new ResponseGenericApi<>();
+        Optional<Role> roleOptional = this.roleService.find(name);
 
         roleOptional.ifPresent(role -> responseApi.setData(this.roleService.convertToDto(role)));
 
@@ -57,8 +57,8 @@ public class RoleController {
     @SecurityRequirement(name = "JWT")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseGenericApi<List<RoleDto>>> getAll() {
-        var responseApi = new ResponseGenericApi<List<RoleDto>>();
-        var roles = this.roleService.getAll();
+        ResponseGenericApi<List<RoleDto>> responseApi = new ResponseGenericApi<>();
+        List<Role> roles = this.roleService.getAll();
 
         responseApi.setData(roles.stream().map(this.roleService::convertToDto).collect(Collectors.toList()));
 

@@ -47,8 +47,8 @@ public class UserController {
         Optional<String> tokenOptional = this.userService.authenticate(request.getEmail(), request.getPassword());
 
         tokenOptional.ifPresent(token -> {
-            var user = this.userService.find(request.getEmail());
-            var dto = this.userService.convertToDto(user.orElseThrow(NullPointerException::new));
+            Optional<User> user = this.userService.find(request.getEmail());
+            UserDto dto = this.userService.convertToDto(user.orElseThrow(NullPointerException::new));
             responseApi.setData(dto);
         });
 
@@ -59,8 +59,8 @@ public class UserController {
     @SecurityRequirement(name = "JWT")
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseGenericApiToken<List<UserDto>>> getAll() {
-        var responseApi = new ResponseGenericApiToken<List<UserDto>>();
-        var users = this.userService.getAll();
+        ResponseGenericApiToken<List<UserDto>> responseApi = new ResponseGenericApiToken<>();
+        List<User> users = this.userService.getAll();
 
         responseApi.setData(users.stream().map(this.userService::convertToDto).collect(Collectors.toList()));
 

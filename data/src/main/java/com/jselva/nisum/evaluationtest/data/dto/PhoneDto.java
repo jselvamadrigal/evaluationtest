@@ -49,7 +49,7 @@ public class PhoneDto {
         if (this == o) return true;
         if (!(o instanceof PhoneDto)) return false;
 
-        var phoneDto = (PhoneDto) o;
+        PhoneDto phoneDto = (PhoneDto) o;
 
         if (!Objects.equals(number, phoneDto.number)) return false;
         if (!Objects.equals(cityCode, phoneDto.cityCode)) return false;
@@ -58,7 +58,7 @@ public class PhoneDto {
 
     @Override
     public int hashCode() {
-        var result = number != null ? number.hashCode() : 0;
+        int result = number != null ? number.hashCode() : 0;
         result = 31 * result + (cityCode != null ? cityCode.hashCode() : 0);
         result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
         return result;

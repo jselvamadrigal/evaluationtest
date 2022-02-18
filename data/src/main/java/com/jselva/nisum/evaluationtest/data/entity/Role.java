@@ -70,7 +70,7 @@ public class Role extends Auditable<String> implements GrantedAuthority {
         if (this == o) return true;
         if (!(o instanceof Role)) return false;
 
-        var role = (Role) o;
+        Role role = (Role) o;
 
         if (!Objects.equals(id, role.id)) return false;
         return Objects.equals(name, role.name);
@@ -78,7 +78,7 @@ public class Role extends Auditable<String> implements GrantedAuthority {
 
     @Override
     public int hashCode() {
-        var result = id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

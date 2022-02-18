@@ -168,7 +168,7 @@ public class UserDto {
         if (this == o) return true;
         if (!(o instanceof UserDto)) return false;
 
-        var userDto = (UserDto) o;
+        UserDto userDto = (UserDto) o;
 
         if (!Objects.equals(id, userDto.id)) return false;
         if (!Objects.equals(name, userDto.name)) return false;
@@ -177,7 +177,7 @@ public class UserDto {
 
     @Override
     public int hashCode() {
-        var result = id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;

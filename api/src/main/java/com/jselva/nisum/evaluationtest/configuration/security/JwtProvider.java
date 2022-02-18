@@ -35,7 +35,7 @@ public class JwtProvider {
     }
 
     public String generateToken(String username, List<Role> roles) {
-        var claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(username);
         claims.put(authoritiesKey,
                 roles.stream().map(
                         role -> new SimpleGrantedAuthority(role.getAuthority())
@@ -70,7 +70,7 @@ public class JwtProvider {
     }
 
     public Boolean isTokenExpired(String token) {
-        final var expirationDate = getExpirationDate(token);
+        final Date expirationDate = getExpirationDate(token);
         return expirationDate.before(new Date());
     }
 

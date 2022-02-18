@@ -58,7 +58,7 @@ public class RoleDto {
         if (this == o) return true;
         if (!(o instanceof RoleDto)) return false;
 
-        var roleDto = (RoleDto) o;
+        RoleDto roleDto = (RoleDto) o;
 
         if (!name.equals(roleDto.name)) return false;
         return description.equals(roleDto.description);
@@ -66,7 +66,7 @@ public class RoleDto {
 
     @Override
     public int hashCode() {
-        var result = name.hashCode();
+        int result = name.hashCode();
         result = 31 * result + description.hashCode();
         return result;
     }
