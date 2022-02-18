@@ -5,7 +5,7 @@ Es un api rest, el cual se encarga de registrar usuarios y devolver los existent
 
 ### Requerimientos
 
-1. Java 11
+1. Java 8
 2. mvn
 3. git
 
